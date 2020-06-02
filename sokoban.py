@@ -3,6 +3,8 @@ from gym_sokoban.envs.sokoban_env_fast import SokobanEnvFast
 import time
 import pandas as pd
 
+TIMEOUT = 30
+FIRST_SEED = 372525 * 1000
 
 def flatten(container):
     for i in container:
@@ -113,9 +115,9 @@ if __name__ == "__main__":
     df = pd.DataFrame(columns=['seed', 'actions'])
 
     results = 0
-    for seed in range(number_of_trials):
+    for seed in range(FIRST_SEED, FIRST_SEED + number_of_trials):
         print("Current trial {} result {}".format(seed, results))
-        new_result, actions = find_solution(size=8, num_boxes=2, time_limit=20, seed=seed)
+        new_result, actions = find_solution(size=8, num_boxes=2, time_limit=TIMEOUT, seed=seed)
         results += new_result
         df = df.append({'seed' : seed , 'actions' : actions} , ignore_index=True)
 
